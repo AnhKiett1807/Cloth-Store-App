@@ -66,9 +66,21 @@ h2 { font-size: 32px; margin-bottom: 8px; }
 .time-box { background: #fff; width: 64px; padding: 10px 0; text-align: center; border-radius: 4px; }
 .time-box strong { display: block; font-size: 22px; }
 .time-box span { font-size: 11px; color: var(--muted); }
-.deals-cards { display: flex; gap: 16px; position: relative; padding-bottom: 36px; }
-.deal-card { flex: 1; height: 340px; border-radius: 4px; opacity: .6; }
-.deal-card.active { opacity: 1; flex: 1.2; }
+
+/* Deals slider: hiện 3 ảnh cao bằng nhau, bấm ảnh để kéo dài xuống */
+.deals-slider { position: relative; min-width: 0; }
+.deals-row { display: flex; gap: 16px; align-items: flex-start; min-height: 340px; }
+.deal { position: relative; flex: 1 1 0; min-width: 0; height: 280px; padding: 0; overflow: hidden; border-radius: 6px; background: var(--ph); text-align: left; transition: height .35s ease; animation: dealIn .4s ease; }
+.deal.active { height: 340px; }
+.deal img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.deal-label { position: absolute; left: 0; bottom: 20px; min-width: 120px; padding: 12px 18px; background: #fff; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .3s ease, transform .3s ease; }
+.deal.active .deal-label { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .deal-label { transition: none; } }
+.deal-label small { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+.deal-line { width: 24px; height: 1px; background: var(--muted); }
+.deal-label strong { display: block; margin-top: 4px; font-size: 18px; font-weight: 500; }
+@keyframes dealIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .deal { transition: none; animation: none; } }
 .dots { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 8px; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: #bbb; }
 .dot.on { background: var(--ink); }
@@ -97,8 +109,14 @@ h2 { font-size: 32px; margin-bottom: 8px; }
 .icon { width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; display: grid; place-items: center; }
 
 /* Instagram */
-.insta { display: flex; gap: 8px; margin-top: 36px; padding: 0 8px 24px; overflow-x: auto; }
-.insta-tile { flex: 0 0 120px; height: 200px; }
+.insta-section { overflow: hidden; }
+.insta { display: grid; grid-template-columns: repeat(7, 1fr); align-items: center; width: 100%; margin-top: 48px; }
+.insta-tile { aspect-ratio: 5 / 6; overflow: hidden; background: var(--ph); }
+.insta-tile:nth-child(even) { aspect-ratio: 2 / 3; }
+.insta-tile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 800px) {
+  .insta { grid-template-columns: repeat(7, 140px); overflow-x: auto; }
+}
 
 /* Testimonial */
 .testimonial { display: flex; gap: 24px; align-items: center; text-align: left; max-width: 640px; margin: 36px auto 0; padding: 28px; border-radius: 6px; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
@@ -135,3 +153,37 @@ html { scroll-padding-top: 72px; }
 .btn { display: inline-block; text-align: center; }
 
 .logo { font-family: "Volkhov", Georgia, serif; }
+
+/* Brands hover */
+.brands span { cursor: pointer; transition: transform .25s ease, opacity .25s ease; }
+.brands span:hover { transform: translateY(-4px) scale(1.08); }
+.brands:hover span:not(:hover) { opacity: .35; }
+@media (prefers-reduced-motion: reduce) {
+  .brands span { transition: none; }
+  .brands span:hover { transform: none; }
+}
+
+/* Deals arrows: nằm hai bên trái/phải dãy ảnh, căn giữa theo chiều dọc */
+.deals-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  font-size: 26px;
+  line-height: 1;
+  transition: transform .2s ease;
+}
+.deals-arrow.prev { left: -20px; }   /* nửa nút đè lên mép ảnh */
+.deals-arrow.next { right: -20px; }
+.deals-arrow:hover { transform: translateY(-50%) scale(1.1); }
+@media (max-width: 800px) {
+  .deals-arrow.prev { left: 4px; }
+  .deals-arrow.next { right: 4px; }
+}

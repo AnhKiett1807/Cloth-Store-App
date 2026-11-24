@@ -1,12 +1,22 @@
 import { useState } from "react";
+import { dealImages } from "../data";
 import Countdown from "./Countdown";
-import Placeholder from "./Placeholder";
 
 const DEAL_SECONDS = 2 * 86400 + 6 * 3600 + 5 * 60 + 30;
-const DEAL_COUNT = 3;
+const VISIBLE = 3; // số ảnh hiển thị cùng lúc
 
 export default function Deals() {
-  const [active, setActive] = useState(0);
+  const [start, setStart] = useState(0); // ảnh đầu tiên đang hiển thị
+  const [active, setActive] = useState<number | null>(null); // mặc định không ảnh nào dài ra
+  const pages = Math.max(1, dealImages.length - VISIBLE + 1);
+  const shown = dealImages.slice(start, start + VISIBLE);
+
+  const go = (s: number) => {
+    setStart(s);
+    setActive(null); // chuyển trang thì thu ảnh lại
+  };
+  const prev = () => go((start - 1 + pages) % pages);
+  const next = () => go((start + 1) % pages);
 
   return (
     <section id="deals" className="deals">
@@ -21,24 +31,39 @@ export default function Deals() {
           <Countdown seconds={DEAL_SECONDS} />
         </div>
 
-        <div className="deals-cards">
-          {Array.from({ length: DEAL_COUNT }, (_, i) => (
-            <Placeholder
-              key={i}
-              className={`deal-card ${i === active ? "active" : ""}`}
-              label={`Deal ${i + 1}`}
-            />
-          ))}
-          <div className="dots">
-            {Array.from({ length: DEAL_COUNT }, (_, i) => (
-              <button
-                key={i}
-                className={i === active ? "dot on" : "dot"}
-                onClick={() => setActive(i)}
-                aria-label={`Deal ${i + 1}`}
-              />
-            ))}
+        <div className="deals-slider">
+          <button className="deals-arrow prev" onClick={prev} aria-label="Previous deals">
+            ‹
+          </button>
+
+          <div className="deals-row">
+            {shown.map((d, i) => {
+              const n = start + i;
+              const isActive = n === active;
+              return (
+                <button
+                  key={d.src}
+                  className={isActive ? "deal active" : "deal"}
+                  onClick={() => setActive(isActive ? null : n)}
+                  aria-pressed={isActive}
+                >
+                  <img src={d.src} alt={d.alt} />
+                  <span className="deal-label">
+                    <small>
+                      {String(n + 1).padStart(2, "0")}
+                      <span className="deal-line" />
+                      {d.title}
+                    </small>
+                    <strong>{d.discount}</strong>
+                  </span>
+                </button>
+              );
+            })}
           </div>
+
+          <button className="deals-arrow next" onClick={next} aria-label="Next deals">
+            ›
+          </button>
         </div>
       </div>
     </section>
