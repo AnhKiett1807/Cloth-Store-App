@@ -3,17 +3,17 @@ import { dealImages } from "../data";
 import Countdown from "./Countdown";
 
 const DEAL_SECONDS = 2 * 86400 + 6 * 3600 + 5 * 60 + 30;
-const VISIBLE = 3; // số ảnh hiển thị cùng lúc
+const VISIBLE = 3;
 
 export default function Deals() {
-  const [start, setStart] = useState(0); // ảnh đầu tiên đang hiển thị
-  const [active, setActive] = useState<number | null>(null); // mặc định không ảnh nào dài ra
+  const [start, setStart] = useState(0);
+  const [active, setActive] = useState<number | null>(null);
   const pages = Math.max(1, dealImages.length - VISIBLE + 1);
   const shown = dealImages.slice(start, start + VISIBLE);
 
   const go = (s: number) => {
     setStart(s);
-    setActive(null); // chuyển trang thì thu ảnh lại
+    setActive(null);
   };
   const prev = () => go((start - 1 + pages) % pages);
   const next = () => go((start + 1) % pages);

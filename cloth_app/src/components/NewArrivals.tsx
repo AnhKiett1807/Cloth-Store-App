@@ -5,10 +5,11 @@ import ProductCard from "./ProductCard";
 export default function NewArrivals() {
   const [tab, setTab] = useState("New Arrivals");
 
-  const shown =
-    tab === "New Arrivals" || tab === "Bestsellers"
-      ? products
-      : products.filter((p) => p.cat === tab);
+  const shown = products.filter((p) => {
+    if (tab === "New Arrivals") return p.isNew;
+    if (tab === "Bestsellers") return p.isBestseller;
+    return p.cat === tab;
+  });
 
   return (
     <section id="new-arrivals" className="container section center">

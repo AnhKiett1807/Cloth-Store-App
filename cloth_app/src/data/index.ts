@@ -3,7 +3,10 @@ export type Product = {
   name: string;
   brand: string;
   price: number;
-  cat: string;
+  cat: "Women" | "Men" | "Accessories";
+  isNew: boolean;
+  isBestseller: boolean;
+  image: string;
 };
 
 export const brands = [
@@ -14,7 +17,6 @@ export const brands = [
   { name: "DENIM", cls: "denim" },
 ];
 
-// Ảnh nằm trong public/images/hero/
 export const heroImages = {
   left: "/images/hero/hero-left.png",
   right: "/images/hero/hero-right.png",
@@ -25,12 +27,12 @@ export const heroImages = {
 export const tabs = ["New Arrivals", "Bestsellers", "Women", "Men", "Accessories"];
 
 export const products: Product[] = [
-  { id: 1, name: "Rounded Red Hat", brand: "Hats", price: 29.0, cat: "Women" },
-  { id: 2, name: "Linen Blouse", brand: "Tops", price: 80.0, cat: "Women" },
-  { id: 3, name: "Straw Beach Hat", brand: "Hats", price: 35.0, cat: "Accessories" },
-  { id: 4, name: "Wool Overcoat", brand: "Coats", price: 120.0, cat: "Men" },
-  { id: 5, name: "Floral Dress", brand: "Dresses", price: 65.0, cat: "Women" },
-  { id: 6, name: "White Shirt", brand: "Shirts", price: 45.0, cat: "Men" },
+  { id: 1, name: "Rounded Red Hat", brand: "Hats", price: 29.0, cat: "Women", isNew: true, isBestseller: false, image: "/images/products/image1.png" },
+  { id: 2, name: "Linen Blouse", brand: "Tops", price: 80.0, cat: "Women", isNew: true, isBestseller: true, image: "/images/products/image2.png" },
+  { id: 3, name: "Straw Beach Hat", brand: "Hats", price: 35.0, cat: "Accessories", isNew: true, isBestseller: true, image: "/images/products/image3.png" },
+  { id: 4, name: "Wool Overcoat", brand: "Coats", price: 120.0, cat: "Men", isNew: true, isBestseller: true, image: "/images/products/image4.png" },
+  { id: 5, name: "Floral Dress", brand: "Dresses", price: 65.0, cat: "Women", isNew: true, isBestseller: true, image: "/images/products/image5.png" },
+  { id: 6, name: "White Shirt", brand: "Shirts", price: 45.0, cat: "Men", isNew: true, isBestseller: false, image: "/images/products/image6.png" },
 ];
 
 export const features = [
@@ -65,11 +67,39 @@ export const navLinks = [
 
 export const footerLinks = ["Support Center", "Invoicing", "Contract", "Careers", "Blog", "FAQ"];
 
-// Ảnh Deals nằm trong public/images/deals/ (thêm hoặc bớt tùy ý)
 export const dealImages = [
   { src: "/images/deals/image1.png", alt: "Deal 1", title: "Spring Sale", discount: "30% OFF" },
   { src: "/images/deals/image2.png", alt: "Deal 2", title: "Summer Sale", discount: "20% OFF" },
   { src: "/images/deals/image3.png", alt: "Deal 3", title: "Autumn Sale", discount: "15% OFF" },
   { src: "/images/deals/image4.png", alt: "Deal 4", title: "Winter Sale", discount: "25% OFF" },
   { src: "/images/deals/image5.png", alt: "Deal 5", title: "Flash Sale", discount: "10% OFF" },
+];
+
+export const featuredImage = "/images/featured/image.png";
+
+export const testimonials = [
+  {
+    name: "James K.",
+    role: "Traveler",
+    text: "You won't regret it. I would like to personally thank you for your outstanding product. Absolutely wonderful!",
+    avatar: "/images/testimonials/image1.png", 
+  },
+  {
+    name: "Sarah M.",
+    role: "Photographer",
+    text: "The quality is excellent and delivery was fast. The fit is exactly as shown, I will order again.",
+    avatar: "/images/testimonials/image2.png",
+  },
+  {
+    name: "Allen W.",
+    role: "Designer",
+    text: "Exactly what I was looking for. Thank you for making it so pleasant and most of all hassle free!",
+    avatar: "/images/testimonials/image3.png",
+  },
+  {
+    name: "Linh T.",
+    role: "Blogger",
+    text: "Great service and beautiful products. Everything arrived on time and the packaging was perfect.",
+    avatar: "/images/testimonials/image4.png",
+  },
 ];
