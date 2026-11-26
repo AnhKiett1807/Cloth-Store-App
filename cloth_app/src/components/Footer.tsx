@@ -16,7 +16,7 @@ export default function Footer() {
             ))}
           </nav>
         </div>
-        <p className="footer-copy">Copyright © 2022 Xpro . All Rights Reserved.</p>
+        <p className="footer-copy">Copyright © 2026 Xpro . All Rights Reserved.</p>
       </div>
     </footer>
   );
